@@ -1,0 +1,42 @@
+<div class="bg-dark">
+    <div class="container pb-3">
+      <section>
+      <footer class="text-center text-white">
+        <div class="container p-5 pb-1">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-6">
+              <p class="d-flex justify-content-center align-items-center" *ngIf="!loggedIn">
+                <span class="me-3">Register for free</span>
+                <a routerLink="/register" class="btn btn-warning">
+                  Sign up!
+                </a>
+              </p>
+              <p class="d-flex justify-content-center align-items-center" *ngIf="!loggedIn">
+                <span class="me-3">Already have an account?</span>
+                <a routerLink="/login" class="btn btn-outline-light">
+                  Sign in!
+                </a>
+              </p>
+              <p class="d-flex justify-content-center align-items-center" *ngIf="loggedIn">
+                <span class="me-3">View my profile</span>
+                <a routerLink="/profile" class="btn btn-outline-light">
+                  My profile
+                </a>
+              </p>
+              <p class="d-flex justify-content-center align-items-center" *ngIf="loggedIn">
+                <span class="me-3">Log out of your account</span>
+                <a class="btn btn-warning" (click)="logout()">
+                  Log out
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="text-center p-3">
+          © 2023 Copyright: ReadRadar
+        </div>
+      </footer>
+    </section>
+      
+    </div>
+    </div>

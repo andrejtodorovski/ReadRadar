@@ -1,0 +1,48 @@
+<div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" routerLink="/">ReadRadar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" *ngFor="let c of categories" href="/books/{{c.id}}">{{c.name}}</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" routerLink="/books" id="view-all">View all books</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="my-reviews" routerLink="/my-reviews" routerLinkActive="active" *ngIf="loggedIn">My Reviews</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="add-book" routerLink="/add-book" routerLinkActive="active" *ngIf="isAdmin">Add Book</a>
+            </li> 
+            <li class="nav-item">
+              <a class="nav-link" id="users" routerLink="/users" routerLinkActive="active" *ngIf="isAdmin">Users</a>
+            </li> 
+            </ul>
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" id="login" routerLink="/login" class="btn btn-outline-light me-2" *ngIf="!loggedIn">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="register" routerLink="/register" class="btn btn-warning" *ngIf="!loggedIn">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="profile" routerLink="/profile" class="btn btn-outline-light me-2" *ngIf="loggedIn">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="logout" routerLink="/" (click)="logout()" class="btn btn-warning" *ngIf="loggedIn">Log Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>

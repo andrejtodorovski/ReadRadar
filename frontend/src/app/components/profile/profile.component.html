@@ -1,0 +1,19 @@
+<div class="container pt-5 pb-5">
+  <div class="profile-container" *ngIf="userInfo">
+    <div class="profile-header">
+      <!-- userInfo.profilePicture -->
+      <img src="{{ '../../../../../assets/user.png' }}" alt="Profile Picture" />
+      <h2>{{ userInfo.username }}</h2>
+      <p>{{ userInfo.role }}</p>
+    </div>
+
+    <div class="profile-info">
+      <p><strong>Email:</strong> {{ userInfo.email }}</p>
+      <p><strong>Number of Reviews:</strong> {{ userInfo.numberOfReviews }}</p>
+      <p>
+        <strong>Most Reviewed Category:</strong>
+        {{ userInfo.mostReviewedCategory }}
+      </p>
+    </div>
+  </div>
+</div>

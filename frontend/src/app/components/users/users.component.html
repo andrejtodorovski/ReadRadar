@@ -1,0 +1,23 @@
+<div class="container pt-5 pb-5">
+    <h1 class="display-6 text-center">User Stats</h1>
+    <table>
+        <thead class="bg-dark">
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>No. of Reviews</th>
+                <th>Most Reviewed Category</th>
+                <th>Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of usersInfo">
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.numberOfReviews }}</td>
+                <td>{{ user.mostReviewedCategory }}</td>
+                <td>{{ user.role }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

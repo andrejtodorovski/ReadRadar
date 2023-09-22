@@ -4,6 +4,7 @@ import com.example.readradar.model.dto.CreateBookDTO
 import com.example.readradar.service.BookService
 import org.springframework.web.bind.annotation.*
 
+
 @RestController
 @RequestMapping("/api/books")
 class BookController(
@@ -31,8 +32,9 @@ class BookController(
     fun delete(@PathVariable id: Long) = bookService.deleteById(id)
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody createBookDTO: CreateBookDTO) = bookService.saveOrUpdate(createBookDTO, id)
+    fun update(@PathVariable id: Long, @RequestBody createBookDTO: CreateBookDTO) =
+        bookService.saveOrUpdate(createBookDTO, id)
 
-    @GetMapping("/recommendations/{userId}")
-    fun getRecommendations(@PathVariable userId: Long) = bookService.recommendBooksForUser(userId)
+    @GetMapping("/top-romance-books")
+    fun getTopRomanceBooks() = bookService.getTopRomanceBooks()
 }

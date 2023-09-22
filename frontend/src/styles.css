@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+.star {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: url("./assets/empty.png");
+    background-size: cover;
+  }
+  .star.filled {
+    background-image: url("./assets/full.png");
+    background-size: cover;
+  }
+  
+  .star.half-filled {
+    background-image: url("./assets/half.png");
+    background-size: cover;
+  }
+  

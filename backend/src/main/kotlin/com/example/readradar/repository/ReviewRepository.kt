@@ -12,6 +12,10 @@ interface ReviewRepository : JpaRepository<Review, Long> {
     fun findByBookId(bookId: Long): List<Review>
 
     fun findTop10ByOrderByTimestampDesc(): List<Review>
+
     fun findByBookIdAndRatingGreaterThanEqual(bookId: Long, rating: Double): List<Review>
+
     fun findByUserIdAndRatingGreaterThanEqual(userId: Long, rating: Double): List<Review>
+
+    fun findByBookIdAndUserId(bookId: Long, userId: Long): Review?
 }

@@ -7,7 +7,6 @@ import com.example.readradar.model.dto.CreateBookDTO
 import com.example.readradar.repository.BookCategoryRepository
 import com.example.readradar.repository.BookRepository
 import com.example.readradar.repository.CategoryRepository
-import com.example.readradar.repository.ReviewRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -17,12 +16,21 @@ class BookService(
     private val bookRepository: BookRepository,
     private val bookCategoryRepository: BookCategoryRepository,
     private val categoryRepository: CategoryRepository,
-    private val reviewRepository: ReviewRepository
 ) {
 
     fun findAll(): List<Book> = bookRepository.findAll()
 
-    fun findById(id: Long): Book = bookRepository.findById(id).orElseThrow { throw BookNotFoundException(id) }
+    fun findById(id: Long): Book {
+        updateBookViewCount(id).also {
+            return bookRepository.findById(id).orElseThrow { throw BookNotFoundException(id) }
+        }
+    }
+
+    fun updateBookViewCount(id: Long) {
+        val book = bookRepository.findById(id).orElseThrow { throw BookNotFoundException(id) }
+        book.viewCount += 1
+        bookRepository.save(book)
+    }
 
     fun findByTitle(title: String): List<Book> = bookRepository.findByTitleContainingIgnoreCase(title)
 
@@ -96,23 +104,16 @@ class BookService(
 
     fun deleteById(id: Long) = bookRepository.deleteById(id)
 
-    fun recommendBooksForUser(userId: Long): List<Book> {
-        val userReviews = reviewRepository.findByUserId(userId)
-        val userReviewedBooks = userReviews.map { it.book.id!! }.toSet()
 
-        val similarUserIds = userReviewedBooks.flatMap { id ->
-            reviewRepository.findByBookIdAndRatingGreaterThanEqual(id, 4.00)
-        }.map { it.user.id }.filter {
-            it != userId
-        }.distinct()
+    fun getTopRomanceBooks(): List<Book> {
+        val books = bookRepository.findAll()
+        return books.filter { isBookATopRomanceBook(it) }
 
-
-        val recommendedBooks = similarUserIds.flatMap { id ->
-            reviewRepository.findByUserIdAndRatingGreaterThanEqual(id, 4.00)
-        }.map { it.book.id }
-            .filter { it !in userReviewedBooks }
-            .distinct().mapNotNull { bookId -> bookRepository.findById(bookId!!).orElse(null) }
-
-        return recommendedBooks
     }
+
+    fun isBookATopRomanceBook(book: Book): Boolean {
+        val categories = bookCategoryRepository.findByBookId(book.id!!).map { it.category.name }
+        return categories.contains("Romance") && (book.averageRating >= 4.00 || book.viewCount >= 1000)
+    }
+
 }

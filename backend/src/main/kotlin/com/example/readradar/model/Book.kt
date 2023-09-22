@@ -12,6 +12,6 @@ data class Book(
     val author: String,
     val coverImage: String,
     val description: String,
-    val averageRating: Double? = null,
-    val price: Double? = null,// ideata beshe Sale na site ljubovni knigi so malku reviews primer neso taka
+    var averageRating: Double = 0.0,
+    var viewCount: Long = 0
 )

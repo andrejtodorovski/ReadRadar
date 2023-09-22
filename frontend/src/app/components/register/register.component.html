@@ -1,0 +1,75 @@
+<div class="container pt-5 pb-5">
+    <div class="row d-flex justify-content-center">
+      <div class="col-5">
+        <div class="card bg-dark text-white">
+          <div class="card-body p-5 text-center">
+            <form #loginForm="ngForm" (ngSubmit)="register()" autocomplete="off">
+              <div class="mb-md-5 mt-md-4">
+                <h2 class="fw-bold mb-2 text-uppercase pb-5">Register</h2>
+                <div class="form-outline form-white mb-4">
+                  <input
+                    required
+                    type="text"
+                    class="form-control form-control-lg"
+                    placeholder="username"
+                    name="username"
+                    [(ngModel)]="registerDTO.username"
+                  />
+                  <label class="form-label" for="username">Username</label><br />
+                </div>
+                <div class="form-outline form-white mb-4">
+                  <input
+                    required
+                    type="password"
+                    class="form-control form-control-lg"
+                    placeholder="password"
+                    name="password"
+                    [(ngModel)]="registerDTO.password"
+                  />
+                  <label class="form-label" for="password">Password</label><br />
+                </div>
+                <div class="form-outline form-white mb-4">
+                    <input
+                      required
+                      type="text"
+                      class="form-control form-control-lg"
+                      placeholder="Profile picture"
+                      name="profilePicture"
+                      [(ngModel)]="registerDTO.profilePicture"
+                    />
+                    <label class="form-label" for="profilePicture">Profile picture</label><br />
+                  </div>
+                  <div class="form-outline form-white mb-4">
+                    <input
+                      required
+                      type="email"
+                      class="form-control form-control-lg"
+                      placeholder="Email"
+                      name="email"
+                      [(ngModel)]="registerDTO.email"
+                    />
+                    <label class="form-label" for="email">Email</label><br />
+                  </div>
+                  <div class="form-outline form-white mb-4">
+                    <select [(ngModel)]="registerDTO.roleId" name="role" class="form-control form-control-lg">
+                        <option *ngFor="let role of roles" [value]="role.id">{{role.name}}</option>
+                    </select>
+                    <label class="form-label" for="role">Role</label><br />
+                  </div>
+                <button class="btn btn-outline-light btn-lg px-5" type="submit">
+                  Register
+                </button>
+              </div>
+              <div>
+                <p class="mb-0">
+                  Already have an account?
+                  <a href="/login" class="text-white-50 fw-bold">Log In</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

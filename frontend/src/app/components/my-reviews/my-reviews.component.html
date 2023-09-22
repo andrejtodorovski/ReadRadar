@@ -1,0 +1,15 @@
+<div class="container pt-5 pb-5">
+  <div class="book-grid row">
+    <div class="book-card col-3" *ngFor="let review of reviews" routerLink="/book/{{review.book.id}}">
+      <img
+        [src]="review.book.coverImage"
+        alt="{{ review.book.title }}"
+        class="book-cover"
+      />
+      <h3>{{ review.book.title }}</h3>
+      <h5>Average Rating: {{ review.book.averageRating }}</h5>
+      <h5>My Rating: {{ review.rating }}</h5>
+      <h5>Comment: {{ review.comment }}</h5>
+    </div>
+  </div>
+</div>

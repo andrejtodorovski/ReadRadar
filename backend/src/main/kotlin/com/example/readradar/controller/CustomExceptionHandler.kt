@@ -2,6 +2,7 @@ package com.example.readradar.controller
 
 import com.example.readradar.exception.*
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 
@@ -30,6 +31,11 @@ class CustomExceptionHandler {
 
     @ExceptionHandler(CannotChangeBookIsbnException::class)
     fun handleCannotChangeBookIsbnException(e: CannotChangeBookIsbnException): ResponseEntity<String> {
+        return ResponseEntity.badRequest().body(e.message)
+    }
+
+    @ExceptionHandler(BadCredentialsException::class)
+    fun handleBadCredentialsException(e: BadCredentialsException): ResponseEntity<String> {
         return ResponseEntity.badRequest().body(e.message)
     }
 }
