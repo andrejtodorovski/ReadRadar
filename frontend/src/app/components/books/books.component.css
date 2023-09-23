@@ -17,7 +17,6 @@
 
 .book-cover {
   width: 100%;
-  height: auto;
   height: 450px;
   object-fit: cover;
   margin-bottom: 12px;
