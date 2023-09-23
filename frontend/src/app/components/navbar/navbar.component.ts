@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit{
   getCurrentUser() {
     return this.accountService.currentUser$.subscribe({
       next: (response) => {        
-        this.isAdmin = response?.role === 'Admin';
+        this.isAdmin = response?.role === 'ADMIN';
         this.loggedIn = !!response;
       },
     });

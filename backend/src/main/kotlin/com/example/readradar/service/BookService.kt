@@ -7,6 +7,7 @@ import com.example.readradar.model.dto.CreateBookDTO
 import com.example.readradar.repository.BookCategoryRepository
 import com.example.readradar.repository.BookRepository
 import com.example.readradar.repository.CategoryRepository
+import com.example.readradar.repository.ReviewRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional
 class BookService(
     private val bookRepository: BookRepository,
     private val bookCategoryRepository: BookCategoryRepository,
-    private val categoryRepository: CategoryRepository,
+    private val categoryRepository: CategoryRepository, private val reviewRepository: ReviewRepository,
 ) {
 
     fun findAll(): List<Book> = bookRepository.findAll()
@@ -102,7 +103,17 @@ class BookService(
     }
 
 
-    fun deleteById(id: Long) = bookRepository.deleteById(id)
+    fun deleteById(id: Long) {
+        val bookCategories = bookCategoryRepository.findByBookId(id)
+        bookCategories.forEach { bookCategory ->
+            bookCategoryRepository.delete(bookCategory)
+        }
+        val reviews = reviewRepository.findByBookId(id)
+        reviews.forEach { review ->
+            reviewRepository.delete(review)
+        }
+        bookRepository.deleteById(id)
+    }
 
 
     fun getTopRomanceBooks(): List<Book> {
