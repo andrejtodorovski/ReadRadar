@@ -30,12 +30,11 @@
             <div class="input-group">
                 <label for="categories">Categories:</label>
                 <select id="categories" [(ngModel)]="selectedCategoryId" name="categories" multiple>
-                    <!-- This assumes you have categories list to choose from, populated in component -->
-                    <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+                    <option *ngFor="let category of categories" [value]="category.id" class="categories">{{ category.name }}</option>
                 </select>
             </div>
     
-            <button type="submit">Add Book</button>
+            <button type="submit" class="btn-primary">Add Book</button>
         </form>
     </div>
     

@@ -1,6 +1,6 @@
 <div class="container pt-5 pb-5">
   <div class="book-grid row">
-    <div class="book-card col-3" *ngFor="let review of reviews" routerLink="/book/{{review.book.id}}">
+    <div class="card col-3" *ngFor="let review of reviews" routerLink="/book/{{review.book.id}}">
       <img
         [src]="review.book.coverImage"
         alt="{{ review.book.title }}"
