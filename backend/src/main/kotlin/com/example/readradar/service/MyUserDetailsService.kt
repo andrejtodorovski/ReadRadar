@@ -26,7 +26,7 @@ class MyUserDetailsService(
             _password = registerDTO.password,
             email = registerDTO.email,
             profilePicture = registerDTO.profilePicture,
-            role = roleRepository.findById(registerDTO.roleId).orElseThrow { throw Exception("Role not found") }
+            role = roleRepository.findById(registerDTO.roleId).get()
         )
         userRepository.save(user)
     }
