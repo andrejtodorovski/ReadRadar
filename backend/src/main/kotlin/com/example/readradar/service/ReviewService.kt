@@ -33,8 +33,8 @@ class ReviewService(
         return reviewRepository.save(
             Review(
                 id = reviewDTO.reviewId,
-                book = bookRepository.findById(bookId).orElseThrow(),
-                user = userRepository.findById(userId).orElseThrow(),
+                book = bookRepository.findById(bookId).get(),
+                user = userRepository.findById(userId).get(),
                 rating = reviewDTO.rating,
                 comment = reviewDTO.comment
             )
@@ -52,8 +52,11 @@ class ReviewService(
         bookRepository.save(book)
     }
 
-    fun deleteById(id: Long) = reviewRepository.deleteById(id).also {
-        updateBookAverageRating(id, 0.0, true)
+    fun deleteById(id: Long) {
+        reviewRepository.findById(id).also {
+            reviewRepository.deleteById(it.get().id!!)
+            updateBookAverageRating(it.get().book.id!!, 0.0, true)
+        }
     }
 
     fun checkIfBookReviewedByUser(bookId: Long, userId: Long): Boolean {

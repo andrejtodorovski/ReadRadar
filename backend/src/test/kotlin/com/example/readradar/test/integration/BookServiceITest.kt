@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.jdbc.Sql
+import java.lang.IllegalArgumentException
 
 @SpringBootTest
 @TestPropertySource(locations = ["classpath:application-test.properties"])
@@ -123,6 +124,21 @@ class BookServiceITest {
         assertEquals("Updated Description", fetchedBook?.description)
     }
 
+    @Test
+    fun `when creating a book with non existing category, it should throw an exception`() {
+        assertThrows<IllegalArgumentException> {
+            bookService.saveOrUpdate(
+                CreateBookDTO(
+                    title = "Test Book5643",
+                    author = "Author",
+                    isbn = "12345678953423120",
+                    description = "Description",
+                    coverImage = "image.jpg",
+                    categoryIds = listOf(55L)
+                )
+            )
+        }
+    }
 
     @Test
     fun `when creating a book with existing name, it should throw an exception`() {

@@ -27,10 +27,10 @@ class BookService(
         }
     }
 
-    fun updateBookViewCount(id: Long) {
+    fun updateBookViewCount(id: Long) : Book{
         val book = bookRepository.findById(id).orElseThrow { throw BookNotFoundException(id) }
         book.viewCount += 1
-        bookRepository.save(book)
+        return bookRepository.save(book)
     }
 
     fun findByTitle(title: String): List<Book> = bookRepository.findByTitleContainingIgnoreCase(title)

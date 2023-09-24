@@ -20,7 +20,11 @@ class CategoryService(
 
     fun save(category: Category): Category = categoryRepository.save(category)
 
-    fun deleteById(id: Long) = categoryRepository.deleteById(id)
+    fun deleteById(id: Long) {
+        bookCategoryRepository.deleteByCategoryId(id).also {
+            categoryRepository.deleteById(id)
+        }
+    }
 
     fun statsForCategories(): List<CategoryStats> = findAll().map { category ->
         calculateStatsForCategory(category)

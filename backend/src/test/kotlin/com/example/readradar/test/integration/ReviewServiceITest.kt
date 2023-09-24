@@ -39,8 +39,8 @@ class ReviewServiceITest {
     @Test
     fun `when adding review to already reviewed book by the user, it should throw an exception`() {
         val reviewDTO = AddReviewDTO(rating = 4.5, comment = "Great book!")
-        val userId = 1L
-        val bookId = 2L
+        val userId = 10L
+        val bookId = 20L
 
         assertThrows<Exception> {
             reviewService.save(reviewDTO, userId, bookId)
@@ -53,7 +53,7 @@ class ReviewServiceITest {
         val reviewDTO = AddReviewDTO(rating = 4.5, comment = "Great book!", reviewId = 2L)
 
         val user = userRepository.findById(1L).get()
-        val book = bookRepository.findById(1L).get()
+        val book = bookRepository.findById(10L).get()
 
         var isReviewedByUser = reviewService.checkIfBookReviewedByUser(book.id!!, user.id!!)
 
@@ -75,7 +75,7 @@ class ReviewServiceITest {
     @Test
     fun `deleting a review also updates the books averageRating`() {
         val user = userRepository.findById(1L).get()
-        val book = bookRepository.findById(1L).get()
+        val book = bookRepository.findById(10L).get()
         val review = reviewService.save(
             AddReviewDTO(4.5, "Great book!"),
             user.id!!,

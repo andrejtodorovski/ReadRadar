@@ -12,4 +12,5 @@ interface BookCategoryRepository : JpaRepository<BookCategory, Long> {
     fun findByCategoryId(categoryId: Long): List<BookCategory>
 
     fun deleteByBookId(bookId: Long)
+    fun deleteByCategoryId(categoryId: Long)
 }

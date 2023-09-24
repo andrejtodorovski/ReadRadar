@@ -181,6 +181,7 @@ class BookServiceUTest {
         assertEquals("New Description", result.description)
 
         verify(exactly = 1) { bookRepository.save(any()) }
+        verify(exactly = 1) { bookCategoryRepository.deleteByBookId(any()) }
 
     }
 
@@ -260,14 +261,16 @@ class BookServiceUTest {
     fun `test deleteById`() {
         val bookId = 10L
 
-        every { bookCategoryRepository.findByBookId(bookId) } returns listOf()
+        every { bookCategoryRepository.findByBookId(bookId) } returns listOf(mockk())
         every { bookCategoryRepository.delete(any()) } returns Unit
-        every { reviewRepository.findByBookId(bookId) } returns listOf()
+        every { reviewRepository.findByBookId(bookId) } returns listOf(mockk())
         every { reviewRepository.delete(any()) } returns Unit
         every { bookRepository.deleteById(bookId) } returns Unit
 
         bookService.deleteById(bookId)
 
+        verify(exactly = 1) { bookCategoryRepository.delete(any()) }
+        verify(exactly = 1) { reviewRepository.delete(any()) }
         verify(exactly = 1) { bookRepository.deleteById(bookId) }
     }
 
@@ -395,6 +398,28 @@ class BookServiceUTest {
         assertEquals(slot.captured.viewCount, result.viewCount)
     }
 
+    @Test
+    fun `test updateBookViewCount with existing book`() {
+        val bookId = 1L
+        val initialViewCount = 5L
+        val book = Book(
+            id = bookId,
+            title = "Some Title",
+            author = "Author",
+            isbn = "1234567890",
+            description = "Description",
+            coverImage = "image.jpg",
+            viewCount = initialViewCount
+        )
+
+        every { bookRepository.findById(bookId) } returns Optional.of(book)
+        every { bookRepository.save(any()) } answers { firstArg() }
+
+        val updatedBook = bookService.updateBookViewCount(bookId)
+
+        assertEquals(initialViewCount + 1, updatedBook.viewCount)
+        verify { bookRepository.save(updatedBook) }
+    }
 
     //  Predicate coverage RCCC 2,3,4,6
 
@@ -407,8 +432,8 @@ class BookServiceUTest {
             isbn = "1234567890",
             description = "Description",
             coverImage = "image.jpg",
-            averageRating = 4.5,
-            viewCount = 100
+            averageRating = 4.00,
+            viewCount = 999
         )
         val category = Category(
             id = 1L, name = "Romance"
@@ -434,7 +459,7 @@ class BookServiceUTest {
             description = "Description",
             coverImage = "image.jpg",
             averageRating = 2.5,
-            viewCount = 2500
+            viewCount = 1000
         )
         val category = Category(
             id = 1L, name = "Romance"

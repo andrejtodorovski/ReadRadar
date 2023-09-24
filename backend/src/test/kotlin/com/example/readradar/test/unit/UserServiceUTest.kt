@@ -140,20 +140,5 @@ class UserServiceUTest {
         verify(exactly = 1) { userRepository.deleteById(id) }
     }
 
-//    @Test
-//    fun `test get currentUser`() {
-//        val user = mockk<User>()
-//        val authentication = mockk<Authentication>()
-//        every { authentication.name } returns "testUsername"
-//        every { userRepository.findBy_username("testUsername") } returns user
-//        every { userService.mapUserToUserInfo(user) } returns mockk()
-//        every { reviewRepository.findByUserId(1L) } returns listOf(mockk())
-//        every { bookCategoryRepository.findByBookId(1L) } returns listOf(mockk())
-//        every { userService.getCurrentUser() } returns mockk()
-//
-//        val result = userService.getCurrentUser()
-//
-//        assertNotNull(result)
-//    }
 
 }

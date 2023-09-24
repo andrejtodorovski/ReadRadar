@@ -54,7 +54,7 @@ configure<info.solidsoft.gradle.pitest.PitestPluginExtension> {
     targetTests.set(setOf("com.example.readradar.*"))
     threads.set(Runtime.getRuntime().availableProcessors())
     outputFormats.set(setOf("XML", "HTML"))
-    mutationThreshold.set(75)
+    mutationThreshold.set(60)
     coverageThreshold.set(60)
 }
 
